@@ -1018,6 +1018,11 @@ Panel {
     font.family: root.contentFontFamily
     font.pixelSize: Style.font.body
   }
+  FontMetrics {
+    id: notesMetrics
+    font.family: root.contentFontFamily
+    font.pixelSize: Style.font.bodySmall
+  }
 
   Component.onCompleted: {
     ensureStateDir()
@@ -1444,7 +1449,10 @@ Panel {
       anchors.left: parent.left
       anchors.leftMargin: Style.spacing.sm + Style.spacing.xs + 1
       anchors.top: parent.top
-      anchors.topMargin: row.textTop + (bodyMetrics.height - checkBtn.height) / 2 + 1
+      // Centred on the first line: the title, or the notes line of a to-do
+      // that has no title.
+      anchors.topMargin: row.textTop
+        + ((row.task && row.task.title ? bodyMetrics.height : notesMetrics.height) - checkBtn.height) / 2
       iconText: row.struck ? "●" : "○"
       tooltipText: row.doneRow ? "Mark incomplete (Space)" : "Mark complete (Space)"
       foreground: root.contentForeground
