@@ -1462,8 +1462,10 @@ Panel {
       anchors.topMargin: row.textTop
       spacing: 2
 
+      // A to-do that is only a link has no title; its notes line moves up
+      // beside the check instead of leaving an empty line there.
       Text {
-        visible: !row.editing
+        visible: !row.editing && text !== ""
         height: visible ? implicitHeight : 0
         width: parent.width
         text: row.task ? row.task.title : ""
@@ -1503,7 +1505,7 @@ Panel {
         opacity: row.struck ? 0.4 : 0.85
         color: row.notesUrl !== "" ? Color.accent : Qt.darker(root.contentForeground, 1.6)
         font.family: root.contentFontFamily
-        font.pixelSize: Style.font.caption
+        font.pixelSize: Style.font.bodySmall
         font.underline: row.notesUrl !== "" && notesHover.hovered
 
         HoverHandler {
